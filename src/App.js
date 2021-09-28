@@ -4,9 +4,21 @@ import ImageBox from './ImageBox'
 
 function App() {
 
-  function displayBois () {
+  let boiArray = [];
+
+  function GetBois () {
     for (let i=0; i<10; i++){
-      <ImageBox />
+      useEffect(() => {
+        axios({
+            method: "GET",
+            url: "https://randomfox.ca/floof/",
+            dataResponse: "json",
+          }).then(({ data }) => {
+            boiArray.push(data.image)
+          }).catch((error) => {
+            alert("Foxxos can't be found! They must be hiding. Maybe they'll come back later.");
+          });
+    }, []);
     }
   }
 
@@ -17,12 +29,13 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload. Does this change anything?
         </p>
+        
+          {GetBois}
+          boiArray.map(item => (
+            <ImageBox url={boiArray.image} />
+          ));
 
-          {displayBois()}
-
-          <ImageBox />
-
-        <a
+         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
